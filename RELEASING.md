@@ -70,6 +70,7 @@ Since we use fixed versioning, you only need to mention one package - all will b
    - Merging the Version Packages PR triggers publishing
    - All packages are built and published to npm
    - Git tags are created
+   - GitHub Release is created with changelog
 
 ### Manual Release (if needed)
 
