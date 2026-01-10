@@ -1,0 +1,46 @@
+{
+  "name": "@embedunit/preset-recommended",
+  "version": "0.1.0",
+  "description": "All-in-one preset for embedunit test framework",
+  "license": "MIT",
+  "author": "embedunit contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/embedunit/embedunit.git",
+    "directory": "packages/preset-recommended"
+  },
+  "bugs": "https://github.com/embedunit/embedunit/issues",
+  "keywords": [
+    "testing",
+    "test-framework",
+    "embedded",
+    "javascript",
+    "preset",
+    "all-in-one",
+    "jest-style"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "rollup -c",
+    "build:types": "rollup -c --configTypes",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@embedunit/core": "workspace:*",
+    "@embedunit/assert": "workspace:*",
+    "@embedunit/spy": "workspace:*",
+    "@embedunit/globals": "workspace:*",
+    "@embedunit/reporters-minimal": "workspace:*"
+  }
+}

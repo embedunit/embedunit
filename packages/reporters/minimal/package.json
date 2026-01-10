@@ -1,0 +1,45 @@
+{
+  "name": "@embedunit/reporters-minimal",
+  "version": "0.1.0",
+  "description": "Minimal console reporter for embedunit",
+  "license": "MIT",
+  "author": "embedunit contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/embedunit/embedunit.git",
+    "directory": "packages/reporters/minimal"
+  },
+  "bugs": "https://github.com/embedunit/embedunit/issues",
+  "keywords": [
+    "reporter",
+    "console",
+    "testing",
+    "embedded",
+    "javascript",
+    "test-output"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "rollup -c",
+    "build:types": "rollup -c --configTypes",
+    "clean": "rm -rf dist",
+    "test": "tsx test/run.ts"
+  },
+  "dependencies": {
+    "@embedunit/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@embedunit/assert": "workspace:*"
+  }
+}

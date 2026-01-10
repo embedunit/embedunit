@@ -1,0 +1,32 @@
+{
+  "name": "embedunit",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "build": "pnpm -r build",
+    "build:types": "pnpm -r build:types",
+    "build:bundles": "pnpm --filter @embedunit/bundles build",
+    "test": "pnpm -r test",
+    "lint": "pnpm -r lint",
+    "lint:fix": "pnpm -r lint:fix",
+    "clean": "pnpm -r clean"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^24.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-replace": "^6.0.2",
+    "@rollup/plugin-terser": "^0.4.0",
+    "@types/node": "^22.14.1",
+    "@typescript-eslint/eslint-plugin": "^8.39.1",
+    "@typescript-eslint/parser": "^8.39.1",
+    "eslint": "^9.33.0",
+    "glob": "^11.0.1",
+    "globals": "^16.3.0",
+    "rollup": "^3.29.5",
+    "rollup-plugin-dts": "^5.0.0",
+    "rollup-plugin-typescript2": "^0.34.1",
+    "tsx": "^4.20.4",
+    "typescript": "^5.3.0"
+  }
+}

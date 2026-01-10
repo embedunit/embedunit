@@ -1,0 +1,38 @@
+{
+  "name": "@embedunit/bundles",
+  "version": "0.1.0",
+  "description": "IIFE bundles for embedunit in embedded runtimes",
+  "license": "MIT",
+  "author": "embedunit contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/embedunit/embedunit.git",
+    "directory": "packages/bundles"
+  },
+  "bugs": "https://github.com/embedunit/embedunit/issues",
+  "keywords": [
+    "bundle",
+    "iife",
+    "testing",
+    "embedded",
+    "javascript",
+    "browser",
+    "script-tag"
+  ],
+  "private": true,
+  "type": "module",
+  "files": ["dist"],
+  "scripts": {
+    "build": "rollup -c",
+    "clean": "rm -rf dist",
+    "test": "tsx test/run.ts"
+  },
+  "dependencies": {
+    "@embedunit/core": "workspace:*",
+    "@embedunit/assert": "workspace:*",
+    "@embedunit/spy": "workspace:*",
+    "@embedunit/globals": "workspace:*",
+    "@embedunit/reporters-minimal": "workspace:*",
+    "@embedunit/preset-recommended": "workspace:*"
+  }
+}

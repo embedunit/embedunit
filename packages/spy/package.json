@@ -1,0 +1,46 @@
+{
+  "name": "@embedunit/spy",
+  "version": "0.1.0",
+  "description": "Spy and mock utilities for embedded JavaScript testing",
+  "license": "MIT",
+  "author": "embedunit contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/embedunit/embedunit.git",
+    "directory": "packages/spy"
+  },
+  "bugs": "https://github.com/embedunit/embedunit/issues",
+  "keywords": [
+    "spy",
+    "mock",
+    "stub",
+    "testing",
+    "embedded",
+    "javascript",
+    "call-tracking"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": ["dist"],
+  "scripts": {
+    "build": "rollup -c",
+    "build:types": "rollup -c --configTypes",
+    "clean": "rm -rf dist",
+    "test": "tsx test/run.ts"
+  },
+  "dependencies": {
+    "@embedunit/assert": "workspace:*"
+  },
+  "devDependencies": {
+    "@embedunit/core": "workspace:*"
+  }
+}
