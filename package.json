@@ -15,9 +15,13 @@
     "test:e2e:browser": "pnpm --filter @embedunit/e2e test:browser",
     "lint": "pnpm -r lint",
     "lint:fix": "pnpm -r lint:fix",
-    "clean": "pnpm -r clean"
+    "clean": "pnpm -r clean",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "pnpm build && changeset publish"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.29.8",
     "@rollup/plugin-commonjs": "^24.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
     "@rollup/plugin-replace": "^6.0.2",
