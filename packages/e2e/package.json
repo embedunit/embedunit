@@ -6,7 +6,7 @@
   "author": "embedunit contributors",
   "repository": {
     "type": "git",
-    "url": "https://github.com/embedunit/embedunit.git",
+    "url": "git+https://github.com/embedunit/embedunit.git",
     "directory": "packages/e2e"
   },
   "private": true,

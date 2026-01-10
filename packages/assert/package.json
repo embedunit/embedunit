@@ -6,7 +6,7 @@
   "author": "Vladislav Remin <vuliad@users.noreply.github.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/embedunit/embedunit.git",
+    "url": "git+https://github.com/embedunit/embedunit.git",
     "directory": "packages/assert"
   },
   "bugs": "https://github.com/embedunit/embedunit/issues",
