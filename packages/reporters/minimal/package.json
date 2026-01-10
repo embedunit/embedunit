@@ -10,6 +10,7 @@
     "directory": "packages/reporters/minimal"
   },
   "bugs": "https://github.com/embedunit/embedunit/issues",
+  "homepage": "https://github.com/embedunit/embedunit#readme",
   "keywords": [
     "reporter",
     "console",
@@ -30,6 +31,13 @@
     }
   },
   "files": ["dist"],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "build": "rollup -c",
     "build:types": "rollup -c --configTypes",

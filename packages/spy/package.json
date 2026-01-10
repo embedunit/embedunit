@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "description": "Spy and mock utilities for embedded JavaScript testing",
   "license": "MIT",
-  "author": "embedunit contributors",
+  "author": "Vladislav Remin <vuliad@users.noreply.github.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/embedunit/embedunit.git",
     "directory": "packages/spy"
   },
   "bugs": "https://github.com/embedunit/embedunit/issues",
+  "homepage": "https://github.com/embedunit/embedunit#readme",
   "keywords": [
     "spy",
     "mock",
@@ -31,6 +32,10 @@
     }
   },
   "files": ["dist"],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "rollup -c",
     "build:types": "rollup -c --configTypes",

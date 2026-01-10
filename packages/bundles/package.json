@@ -3,13 +3,14 @@
   "version": "0.1.0",
   "description": "IIFE bundles for embedunit in embedded runtimes",
   "license": "MIT",
-  "author": "embedunit contributors",
+  "author": "Vladislav Remin <vuliad@users.noreply.github.com>",
   "repository": {
     "type": "git",
     "url": "https://github.com/embedunit/embedunit.git",
     "directory": "packages/bundles"
   },
   "bugs": "https://github.com/embedunit/embedunit/issues",
+  "homepage": "https://github.com/embedunit/embedunit#readme",
   "keywords": [
     "bundle",
     "iife",
@@ -22,6 +23,10 @@
   "private": true,
   "type": "module",
   "files": ["dist"],
+  "sideEffects": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "rollup -c",
     "clean": "rm -rf dist",
