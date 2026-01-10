@@ -8,6 +8,11 @@
     "build:types": "pnpm -r build:types",
     "build:bundles": "pnpm --filter @embedunit/bundles build",
     "test": "pnpm -r test",
+    "test:e2e": "pnpm --filter @embedunit/e2e test:all",
+    "test:e2e:node": "pnpm --filter @embedunit/e2e test:node",
+    "test:e2e:deno": "pnpm --filter @embedunit/e2e test:deno",
+    "test:e2e:quickjs": "pnpm --filter @embedunit/e2e test:quickjs",
+    "test:e2e:browser": "pnpm --filter @embedunit/e2e test:browser",
     "lint": "pnpm -r lint",
     "lint:fix": "pnpm -r lint:fix",
     "clean": "pnpm -r clean"

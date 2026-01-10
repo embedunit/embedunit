@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmbedUnit E2E Browser Test</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        #status {
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        .loading { background: #fff3cd; color: #856404; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        #results {
+            background: white;
+            padding: 15px;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>EmbedUnit E2E Test Harness</h1>
+    <div id="status" class="loading">Loading...</div>
+    <div id="results"></div>
+
+    <script>
+        // Store test results for Playwright to read
+        window.e2eTestResults = null;
+        window.e2eTestError = null;
+
+        // Function to run tests with a bundle
+        window.runE2ETests = async function(testCode) {
+            const statusEl = document.getElementById('status');
+            const resultsEl = document.getElementById('results');
+
+            try {
+                statusEl.textContent = 'Running tests...';
+                statusEl.className = 'loading';
+
+                // EmbedUnit should already be loaded via script tag
+                if (typeof EmbedUnit === 'undefined') {
+                    throw new Error('EmbedUnit not loaded');
+                }
+
+                const { describe, it, expect, beforeEach, afterEach, beforeAll, afterAll, runTests, resetRegistry } = EmbedUnit;
+
+                // Reset before running new tests
+                resetRegistry();
+
+                // Execute the test code
+                const testFn = new Function(
+                    'EmbedUnit', 'describe', 'it', 'expect',
+                    'beforeEach', 'afterEach', 'beforeAll', 'afterAll',
+                    testCode
+                );
+                testFn(EmbedUnit, describe, it, expect, beforeEach, afterEach, beforeAll, afterAll);
+
+                // Run the tests
+                const result = await runTests({ silent: true });
+
+                window.e2eTestResults = result;
+
+                statusEl.textContent = `Tests completed: ${result.summary.passed} passed, ${result.summary.failed} failed`;
+                statusEl.className = result.summary.failed > 0 ? 'error' : 'success';
+
+                resultsEl.textContent = JSON.stringify(result, null, 2);
+
+                return result;
+            } catch (error) {
+                window.e2eTestError = error.message;
+                statusEl.textContent = 'Error: ' + error.message;
+                statusEl.className = 'error';
+                resultsEl.textContent = error.stack || error.message;
+                throw error;
+            }
+        };
+    </script>
+</body>
+</html>

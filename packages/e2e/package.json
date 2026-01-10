@@ -1,0 +1,27 @@
+{
+  "name": "@embedunit/e2e",
+  "version": "0.1.0",
+  "description": "E2E tests for embedunit bundles across multiple runtimes",
+  "license": "MIT",
+  "author": "embedunit contributors",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/embedunit/embedunit.git",
+    "directory": "packages/e2e"
+  },
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "tsx test/run.ts",
+    "test:node": "tsx test/run.ts --filter=node",
+    "test:browser": "playwright test --config=test/browser/playwright.config.ts",
+    "test:quickjs": "tsx test/run.ts --filter=quickjs",
+    "test:deno": "tsx test/run.ts --filter=deno",
+    "test:all": "pnpm test:node && pnpm test:deno && pnpm test:quickjs && pnpm test:browser"
+  },
+  "devDependencies": {
+    "@embedunit/core": "workspace:*",
+    "@embedunit/assert": "workspace:*",
+    "@playwright/test": "^1.40.0"
+  }
+}
