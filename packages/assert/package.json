@@ -1,6 +1,6 @@
 {
   "name": "@embedunit/assert",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Jest-style assertions for embedded JavaScript runtimes",
   "license": "MIT",
   "author": "Vladislav Remin <vuliad@users.noreply.github.com>",
@@ -32,7 +32,9 @@
       "types": "./dist/index.d.ts"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
   "publishConfig": {
     "access": "public"
