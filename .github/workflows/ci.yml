@@ -119,7 +119,7 @@ jobs:
           cd quickjs-build
           make
           sudo make install
-          qjs --help
+          qjs -e "print('QuickJS installed successfully')"
 
       - name: Install dependencies
         run: pnpm install

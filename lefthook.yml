@@ -1,0 +1,6 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - name: lockfile-check
+      glob: "**/package.json"
+      run: pnpm install --frozen-lockfile
