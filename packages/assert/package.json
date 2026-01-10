@@ -1,6 +1,6 @@
 {
   "name": "@embedunit/assert",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Jest-style assertions for embedded JavaScript runtimes",
   "license": "MIT",
   "author": "Vladislav Remin <vuliad@users.noreply.github.com>",

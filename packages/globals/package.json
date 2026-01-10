@@ -1,6 +1,6 @@
 {
   "name": "@embedunit/globals",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Global installation utilities for embedunit",
   "license": "MIT",
   "author": "Vladislav Remin <vuliad@users.noreply.github.com>",
