@@ -1,5 +1,12 @@
 # @embedunit/reporters-minimal
 
+## 0.4.0
+
+### Patch Changes
+
+- Updated dependencies [[`d29bb8d`](https://github.com/embedunit/embedunit/commit/d29bb8d18c8b9f1b463e765d52865756dc983ce4)]:
+  - @embedunit/core@0.4.0
+
 ## 0.3.0
 
 ### Patch Changes
