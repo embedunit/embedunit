@@ -20,7 +20,6 @@
     "browser",
     "script-tag"
   ],
-  "private": true,
   "type": "module",
   "files": ["dist"],
   "sideEffects": false,
