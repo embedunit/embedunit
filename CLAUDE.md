@@ -42,6 +42,12 @@ Build order matters due to these dependencies:
 - `dist/embedunit.lite.global.js` - Minimal bundle (core + assert)
 - All have `.min.js` versions
 
+## Git Workflow
+
+- **Code changes** (features, fixes) must go through pull requests
+- **Chore commits** (CI, docs, configs) can go directly to main
+- The release workflow runs on push to main and handles versioning via changesets
+
 ## Development Guidelines
 
 - Each package has `src/index.ts` as entry point
