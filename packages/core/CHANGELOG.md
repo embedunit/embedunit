@@ -1,5 +1,11 @@
 # @embedunit/core
 
+## 0.4.0
+
+### Minor Changes
+
+- [`d29bb8d`](https://github.com/embedunit/embedunit/commit/d29bb8d18c8b9f1b463e765d52865756dc983ce4) Thanks [@vuliad](https://github.com/vuliad)! - Test OIDC trusted publishing with npm 11.5+
+
 ## 0.3.0
 
 ### Minor Changes

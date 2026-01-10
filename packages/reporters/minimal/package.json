@@ -1,6 +1,6 @@
 {
   "name": "@embedunit/reporters-minimal",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Minimal console reporter for embedunit",
   "license": "MIT",
   "author": "embedunit contributors",
