@@ -1,5 +1,16 @@
 # @embedunit/preset-recommended
 
+## 0.5.0
+
+### Patch Changes
+
+- Updated dependencies [[`f604636`](https://github.com/embedunit/embedunit/commit/f6046361b393533e151432fc869985fac2f4807b)]:
+  - @embedunit/core@0.5.0
+  - @embedunit/assert@0.5.0
+  - @embedunit/globals@0.5.0
+  - @embedunit/reporters-minimal@0.5.0
+  - @embedunit/spy@0.5.0
+
 ## 0.4.0
 
 ### Patch Changes
