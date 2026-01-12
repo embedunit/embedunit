@@ -80,6 +80,9 @@ importers:
       '@embedunit/globals':
         specifier: workspace:*
         version: link:../globals
+      '@embedunit/plugins-sourcemap':
+        specifier: workspace:*
+        version: link:../plugins/sourcemap
       '@embedunit/preset-recommended':
         specifier: workspace:*
         version: link:../preset-recommended
@@ -91,10 +94,6 @@ importers:
         version: link:../spy
 
   packages/core:
-    dependencies:
-      source-map-js:
-        specifier: ^1.2.1
-        version: 1.2.1
     devDependencies:
       '@embedunit/assert':
         specifier: workspace:*
@@ -123,6 +122,15 @@ importers:
       '@embedunit/spy':
         specifier: workspace:*
         version: link:../spy
+
+  packages/plugins/sourcemap:
+    dependencies:
+      '@embedunit/core':
+        specifier: workspace:*
+        version: link:../../core
+      source-map-js:
+        specifier: ^1.2.1
+        version: 1.2.1
 
   packages/preset-recommended:
     dependencies:

@@ -1,45 +1,49 @@
 {
-  "name": "@embedunit/bundles",
+  "name": "@embedunit/plugins-sourcemap",
   "version": "0.4.0",
-  "description": "IIFE bundles for embedunit in embedded runtimes",
+  "description": "Source map support plugin for embedunit",
   "license": "MIT",
   "author": "Vladislav Remin <vuliad@users.noreply.github.com>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/embedunit/embedunit.git",
-    "directory": "packages/bundles"
+    "directory": "packages/plugins/sourcemap"
   },
   "bugs": "https://github.com/embedunit/embedunit/issues",
   "homepage": "https://github.com/embedunit/embedunit#readme",
   "keywords": [
-    "bundle",
-    "iife",
+    "sourcemap",
+    "source-map",
     "testing",
     "embedded",
     "javascript",
-    "browser",
-    "script-tag"
+    "stack-trace"
   ],
   "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "files": [
     "dist"
   ],
-  "sideEffects": false,
+  "sideEffects": true,
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
     "build": "rollup -c",
-    "clean": "rm -rf dist",
-    "test": "tsx test/run.ts"
+    "build:types": "rollup -c --configTypes",
+    "clean": "rm -rf dist"
   },
   "dependencies": {
     "@embedunit/core": "workspace:*",
-    "@embedunit/assert": "workspace:*",
-    "@embedunit/spy": "workspace:*",
-    "@embedunit/globals": "workspace:*",
-    "@embedunit/reporters-minimal": "workspace:*",
-    "@embedunit/preset-recommended": "workspace:*",
-    "@embedunit/plugins-sourcemap": "workspace:*"
+    "source-map-js": "^1.2.1"
   }
 }

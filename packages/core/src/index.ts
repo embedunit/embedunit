@@ -33,3 +33,5 @@ export type { TestContext } from './enhanced-error';
 
 // Source map error parsing
 export { parseError, remapPosition, remapBrowserStack } from './error';
+export { setErrorRemapper, unsetErrorRemapper, getErrorRemapper } from './error';
+export type { SafeError, Frame } from './error';

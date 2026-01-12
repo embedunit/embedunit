@@ -22,5 +22,6 @@ export const externalPackages = [
   '@embedunit/globals',
   '@embedunit/reporters-minimal',
   '@embedunit/preset-recommended',
+  '@embedunit/plugins-sourcemap',
   'source-map-js'
 ];

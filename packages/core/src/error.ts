@@ -1,106 +1,62 @@
-// sourceMapRemapper.ts
-
-import {RawSourceMap, SourceMapConsumer} from 'source-map-js';
-
 // Represents a stack frame position
-interface Frame {
+export interface Frame {
     source: string;
     line: number;
     column: number;
     name?: string | null;
 }
 
-// Cache for loaded SourceMapConsumer instances
-const consumerCache = new Map<string, SourceMapConsumer>();
-const SOURCE_MAP_CACHE_LIMIT = 100;
-const SOURCE_MAP_FETCH_TIMEOUT_MS = 30000;
+// Pluggable frame remapper hook
+let frameRemapper: ((frame: Frame) => Promise<Frame>) | null = null;
 
 /**
- * Fetch and parse a source map for a given URL
- * @param mapUrl URL of the .map file
+ * Set a custom error remapper function for source map support.
+ * This is typically called by @embedunit/plugins-sourcemap on import.
+ * @param remapper Function that remaps a frame to its original source position
  */
-async function loadSourceMap(mapUrl: string): Promise<SourceMapConsumer> {
-    if (consumerCache.has(mapUrl)) {
-        return consumerCache.get(mapUrl)!;
-    }
-
-    // Check if fetch is available (not present in QuickJS, some game engines, etc.)
-    if (typeof fetch !== 'function') {
-        throw new Error('fetch is not available in this environment');
-    }
-
-    // Set up abort controller for timeout
-    const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
-    const timeoutId = controller
-        ? setTimeout(() => controller.abort(), SOURCE_MAP_FETCH_TIMEOUT_MS)
-        : null;
-
-    try {
-        const response = await fetch(mapUrl, controller ? { signal: controller.signal } : undefined);
-        if (!response.ok) {
-            throw new Error(`Failed to load source map: ${mapUrl} (status ${response.status})`);
-        }
-
-        const rawMap: string = await response.text();
-        const consumer = new SourceMapConsumer(JSON.parse(rawMap) as RawSourceMap);
-
-        // Enforce cache size limit by removing oldest entry if at capacity
-        if (consumerCache.size >= SOURCE_MAP_CACHE_LIMIT) {
-            const oldestKey = consumerCache.keys().next().value;
-            if (oldestKey !== undefined) {
-                consumerCache.delete(oldestKey);
-            }
-        }
-
-        consumerCache.set(mapUrl, consumer);
-        return consumer;
-    } finally {
-        if (timeoutId !== null) {
-            clearTimeout(timeoutId);
-        }
-    }
+export function setErrorRemapper(remapper: (frame: Frame) => Promise<Frame>): void {
+    frameRemapper = remapper;
 }
 
 /**
- * Remap a generated frame position back to its original source, with safe fallback
- * @param frame generated code frame
+ * Unset the error remapper, reverting to default (no-op) behavior.
  */
-export async function remapPosition(frame: Frame): Promise<Frame> {
-    try {
-        const mapUrl = `${frame.source}.map`; // or check for js file first?
-        const consumer = await loadSourceMap(mapUrl);
-        const orig = consumer.originalPositionFor({line: frame.line, column: frame.column});
-
-        return {
-            source: orig.source || frame.source,
-            line: orig.line || frame.line,
-            column: orig.column || frame.column,
-            name: orig.name || frame.name
-        };
-    } catch {
-        // On any error (fetch fail, parse fail, missing source map), return original frame
-        return {...frame};
-    }
+export function unsetErrorRemapper(): void {
+    frameRemapper = null;
 }
 
 /**
- * Parse and remap a browser Error.stack string
- * @param stackStr original stack string
+ * Get the currently registered error remapper, if any.
  */
-export async function remapBrowserStack(stackStr: string): Promise<string> {
-    const lines = stackStr.split('\n');
-    const mappedLines = await Promise.all(
-        lines.map(async line => {
-            const regex = /^\s*at\s+(.*?)\s+\((.*?):(\d+):(\d+)\)$/;
-            const match = line.match(regex);
-            if (!match) return line;
-            const [, fnName, url, rawLine, rawCol] = match;
-            const frame: Frame = {source: url, line: parseInt(rawLine, 10), column: parseInt(rawCol, 10), name: fnName};
-            const remapped = await remapPosition(frame);
-            return `    at ${remapped.name || fnName} (${remapped.source}:${remapped.line}:${remapped.column})`;
-        })
+export function getErrorRemapper(): ((frame: Frame) => Promise<Frame>) | null {
+    return frameRemapper;
+}
+
+// Default no-op remapper (returns frame unchanged)
+async function defaultRemapper(frame: Frame): Promise<Frame> {
+    return { ...frame };
+}
+
+/**
+ * @deprecated remapPosition has moved to @embedunit/plugins-sourcemap.
+ * Import that package to enable source map support, or import { remapPosition } from '@embedunit/plugins-sourcemap' for direct usage.
+ */
+export function remapPosition(): never {
+    throw new Error(
+        'remapPosition has moved to @embedunit/plugins-sourcemap. ' +
+        'Import that package to enable source map support.'
     );
-    return mappedLines.join('\n');
+}
+
+/**
+ * @deprecated remapBrowserStack has moved to @embedunit/plugins-sourcemap.
+ * Import that package to enable source map support, or import { remapBrowserStack } from '@embedunit/plugins-sourcemap' for direct usage.
+ */
+export function remapBrowserStack(): never {
+    throw new Error(
+        'remapBrowserStack has moved to @embedunit/plugins-sourcemap. ' +
+        'Import that package to enable source map support.'
+    );
 }
 
 export interface SafeError {
@@ -114,9 +70,11 @@ export interface SafeError {
 
 /**
  * Parses any thrown value and returns a structured SafeError,
- * remapping frames via source maps if available.
+ * remapping frames via source maps if a remapper is registered.
  */
 export async function parseError(e: unknown): Promise<SafeError> {
+    const remapper = frameRemapper || defaultRemapper;
+
     try {
         if (e instanceof Error) {
             const {name, message, stack} = e;
@@ -133,7 +91,7 @@ export async function parseError(e: unknown): Promise<SafeError> {
                 }
                 const [, fn, file, rawLineNum, rawColNum] = match;
                 const genFrame = {source: file, line: +rawLineNum, column: +rawColNum, name: fn};
-                const remapped = await remapPosition(genFrame);
+                const remapped = await remapper(genFrame);
                 const isTestFile = /\.test\.(js|ts)x?$/.test(remapped.source);
                 frames.push({file: remapped.source, line: remapped.line, column: remapped.column, isTestFile});
                 formattedLines.push(

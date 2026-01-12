@@ -48,5 +48,6 @@ function createBundle(input, outputName) {
 export default [
   ...createBundle('src/recommended.ts', 'embedunit.recommended.global'),
   ...createBundle('src/recommended-globals.ts', 'embedunit.recommended.globals'),
-  ...createBundle('src/lite.ts', 'embedunit.lite.global')
+  ...createBundle('src/lite.ts', 'embedunit.lite.global'),
+  ...createBundle('src/recommended-sourcemap.ts', 'embedunit.recommended.sourcemap.global')
 ];
