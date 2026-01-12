@@ -44,7 +44,7 @@ jobs:
           publish: pnpm release
           title: 'chore: version packages'
           commit: 'chore: version packages'
-          createGithubReleases: true
+          createGithubReleases: aggregate
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_CONFIG_PROVENANCE: true
