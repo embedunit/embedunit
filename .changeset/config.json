@@ -3,7 +3,7 @@
   "changelog": ["@changesets/changelog-github", { "repo": "embedunit/embedunit" }],
   "commit": false,
   "fixed": [
-    ["@embedunit/core", "@embedunit/assert", "@embedunit/spy", "@embedunit/globals", "@embedunit/reporters-minimal", "@embedunit/preset-recommended", "@embedunit/bundles"]
+    ["@embedunit/core", "@embedunit/assert", "@embedunit/spy", "@embedunit/globals", "@embedunit/reporters-minimal", "@embedunit/preset-recommended", "@embedunit/bundles", "@embedunit/plugins-sourcemap"]
   ],
   "linked": [],
   "access": "public",
