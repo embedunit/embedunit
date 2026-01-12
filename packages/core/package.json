@@ -1,6 +1,6 @@
 {
   "name": "@embedunit/core",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Tiny test runner core for embedded JavaScript runtimes",
   "license": "MIT",
   "author": "Vladislav Remin <vuliad@users.noreply.github.com>",
