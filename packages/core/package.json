@@ -47,9 +47,6 @@
     "clean": "rm -rf dist",
     "test": "tsx test/run.ts"
   },
-  "dependencies": {
-    "source-map-js": "^1.2.1"
-  },
   "devDependencies": {
     "@embedunit/assert": "workspace:*"
   }
