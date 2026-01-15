@@ -172,8 +172,8 @@ function createSpy<T extends (...args: any[]) => any>(
                     result = returnValue;
                     break;
                 case 'returnValues':
-                    result = returnValues[returnValueIndex];
-                    returnValueIndex = Math.min(returnValueIndex + 1, returnValues.length - 1);
+                    result = returnValueIndex < returnValues.length ? returnValues[returnValueIndex] : undefined;
+                    returnValueIndex++;
                     break;
                 case 'throwError':
                     throw errorToThrow;
