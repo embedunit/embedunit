@@ -8,6 +8,7 @@ import './spy-async-edge-cases.test';
 import './spy-async-edge-cases2.test';
 import './spy-edge-cases.test';
 import './mock.test';
+import './spy-returnvalues-bug.test';
 
 async function main() {
     const result = await runTests({

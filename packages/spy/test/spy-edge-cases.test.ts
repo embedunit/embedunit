@@ -247,8 +247,8 @@ describe('Spy Edge Cases and Additional Coverage', () => {
             spy.returnValues(42);
 
             expect(obj.method()).toBe(42);
-            expect(obj.method()).toBe(42); // Stays at last value
-            expect(obj.method()).toBe(42);
+            expect(obj.method()).toBeUndefined(); // Returns undefined after exhausting values
+            expect(obj.method()).toBeUndefined();
         });
     });
 

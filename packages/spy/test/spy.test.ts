@@ -177,7 +177,7 @@ describe('Spy Functionality', () => {
             expect(obj.method()).toBe(1);
             expect(obj.method()).toBe(2);
             expect(obj.method()).toBe(3);
-            expect(obj.method()).toBe(3); // Stays at last value
+            expect(obj.method()).toBeUndefined(); // Returns undefined after exhausting values
         });
     });
 
