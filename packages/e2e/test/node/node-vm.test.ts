@@ -497,9 +497,9 @@ describe('Node.js VM Runtime', () => {
 
                     // First verify the tag is properly extracted
                     const testList = getTestList();
-                    const debugTest = testList.find((t: { test: string }) => t.test.includes('debug'));
+                    const debugTest = testList.find((t: { tags: string[] }) => t.tags.includes('debug-test'));
                     expect(debugTest).toBeDefined();
-                    expect(debugTest.tags).toContain('debug-test');
+                    expect(debugTest.test).toBe('test with  tag'); // double space where tag was removed
 
                     // Then verify filtering works
                     const result = await runTests({ silent: true, tags: ['debug-test'] });
@@ -523,6 +523,70 @@ describe('Node.js VM Runtime', () => {
                     expect(result.summary.passed).toBe(1);
                     // The test name should be stripped of the tag
                     expect(result.passed[0].test).toBe('test should have clean name');
+                });
+
+                it('filters tests by tag with dot (e.g. @v1.0)', async () => {
+                    const describe = EmbedUnit.describe as Function;
+                    const it = EmbedUnit.it as Function;
+                    const expectFn = EmbedUnit.expect as Function;
+                    const runTests = EmbedUnit.runTests as Function;
+                    const getTestList = EmbedUnit.getTestList as Function;
+
+                    describe('Dot Tag Suite', () => {
+                        it('@v2.0 new feature test', () => {
+                            expectFn(true).toBe(true);
+                        });
+
+                        it('@bug.123 regression test', () => {
+                            expectFn(true).toBe(true);
+                        });
+
+                        it('test without tag', () => {
+                            expectFn(true).toBe(true);
+                        });
+                    });
+
+                    // Verify tag with dot is properly extracted
+                    const testList = getTestList();
+                    const versionTest = testList.find((t: { tags: string[] }) => t.tags.includes('v2.0'));
+                    expect(versionTest).toBeDefined();
+
+                    // Verify filtering works
+                    const result = await runTests({ silent: true, tags: ['bug.123'] });
+                    expect(result.summary.passed).toBe(1);
+                    expect(result.summary.total).toBe(1);
+                });
+
+                it('filters tests by tag with colon (e.g. @skip:ci)', async () => {
+                    const describe = EmbedUnit.describe as Function;
+                    const it = EmbedUnit.it as Function;
+                    const expectFn = EmbedUnit.expect as Function;
+                    const runTests = EmbedUnit.runTests as Function;
+                    const getTestList = EmbedUnit.getTestList as Function;
+
+                    describe('Colon Tag Suite', () => {
+                        it('@skip:ci should not run in CI', () => {
+                            expectFn(true).toBe(true);
+                        });
+
+                        it('@env:prod production only test', () => {
+                            expectFn(true).toBe(true);
+                        });
+
+                        it('test without tag', () => {
+                            expectFn(true).toBe(true);
+                        });
+                    });
+
+                    // Verify tag with colon is properly extracted
+                    const testList = getTestList();
+                    const skipTest = testList.find((t: { tags: string[] }) => t.tags.includes('skip:ci'));
+                    expect(skipTest).toBeDefined();
+
+                    // Verify filtering works
+                    const result = await runTests({ silent: true, tags: ['env:prod'] });
+                    expect(result.summary.passed).toBe(1);
+                    expect(result.summary.total).toBe(1);
                 });
             });
         }

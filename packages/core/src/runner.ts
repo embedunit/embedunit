@@ -113,7 +113,7 @@ export type TestMeta = {
  * Strips @tag annotations from a test or suite name
  */
 function stripTags(name: string): string {
-    return name.replace(/@\w+/g, '').trim();
+    return name.replace(/@[\w\-.:]+/g, '').trim();
 }
 
 /**
