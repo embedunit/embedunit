@@ -25,7 +25,7 @@ function createDescribeBlock(name: string, parent: DescribeBlock | null): Descri
 }
 
 function extractTags(name: string): { clean: string, tags: string[] } {
-  const tagPattern = /@\w+/g;
+  const tagPattern = /@[\w\-.:]+/g;
   const tags: string[] = [];
   const clean = name.replace(tagPattern, (match) => {
     tags.push(match.slice(1)); // remove @
