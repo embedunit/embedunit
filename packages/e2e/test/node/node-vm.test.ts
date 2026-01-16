@@ -438,4 +438,93 @@ describe('Node.js VM Runtime', () => {
             });
         }
     });
+
+    describe('Tag Filtering', () => {
+        for (const bundleFile of BUNDLE_FILES) {
+            describe(bundleFile, () => {
+                let EmbedUnit: Record<string, unknown>;
+
+                beforeEach(() => {
+                    ({ EmbedUnit } = loadBundleInVM(bundleFile));
+                    (EmbedUnit.resetRegistry as () => void)();
+                });
+
+                afterEach(() => {
+                    (EmbedUnit.resetRegistry as () => void)();
+                });
+
+                it('filters tests by simple tag', async () => {
+                    const describe = EmbedUnit.describe as Function;
+                    const it = EmbedUnit.it as Function;
+                    const expectFn = EmbedUnit.expect as Function;
+                    const runTests = EmbedUnit.runTests as Function;
+
+                    describe('Tag Suite', () => {
+                        it('test with @slow tag', () => {
+                            expectFn(true).toBe(true);
+                        });
+
+                        it('test without tag', () => {
+                            expectFn(true).toBe(true);
+                        });
+                    });
+
+                    const result = await runTests({ silent: true, tags: ['slow'] });
+                    expect(result.summary.passed).toBe(1);
+                    expect(result.summary.total).toBe(1);
+                });
+
+                it('filters tests by tag with hyphen (e.g. @debug-test)', async () => {
+                    const describe = EmbedUnit.describe as Function;
+                    const it = EmbedUnit.it as Function;
+                    const expectFn = EmbedUnit.expect as Function;
+                    const runTests = EmbedUnit.runTests as Function;
+                    const getTestList = EmbedUnit.getTestList as Function;
+
+                    describe('Hyphen Tag Suite', () => {
+                        it('test with @debug-test tag', () => {
+                            expectFn(true).toBe(true);
+                        });
+
+                        it('test with @e2e-integration tag', () => {
+                            expectFn(true).toBe(true);
+                        });
+
+                        it('test without tag', () => {
+                            expectFn(true).toBe(true);
+                        });
+                    });
+
+                    // First verify the tag is properly extracted
+                    const testList = getTestList();
+                    const debugTest = testList.find((t: { test: string }) => t.test.includes('debug'));
+                    expect(debugTest).toBeDefined();
+                    expect(debugTest.tags).toContain('debug-test');
+
+                    // Then verify filtering works
+                    const result = await runTests({ silent: true, tags: ['debug-test'] });
+                    expect(result.summary.passed).toBe(1);
+                    expect(result.summary.total).toBe(1);
+                });
+
+                it('strips hyphenated tags from test names correctly', async () => {
+                    const describe = EmbedUnit.describe as Function;
+                    const it = EmbedUnit.it as Function;
+                    const expectFn = EmbedUnit.expect as Function;
+                    const runTests = EmbedUnit.runTests as Function;
+
+                    describe('Name Stripping Suite', () => {
+                        it('@slow-running test should have clean name', () => {
+                            expectFn(true).toBe(true);
+                        });
+                    });
+
+                    const result = await runTests({ silent: true, includePassed: true });
+                    expect(result.summary.passed).toBe(1);
+                    // The test name should be stripped of the tag
+                    expect(result.passed[0].test).toBe('test should have clean name');
+                });
+            });
+        }
+    });
 });
